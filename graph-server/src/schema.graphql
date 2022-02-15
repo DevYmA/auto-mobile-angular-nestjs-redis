@@ -1,0 +1,68 @@
+type Vehicle {
+  id: Int!
+  firstName: String
+  lastName: String
+  email: String
+  carMake: String
+  carModel: String
+  vinNumber: String
+  manufacturedDate: String
+}
+  
+type Query {
+  allVehicles(filter:VehicleFilter, first:Int, last:Int, after:String, before:String, orderBy:VehicleOrderBy): Node
+  allVehiclesByLimitAndOrder(first:Int, last:Int, after:String, before:String, orderBy:VehicleOrderBy):Node
+  vehicleById(id: Int!): Vehicle!
+}
+
+type Mutation {
+  createVehicle(createVehicleInput: CreateVehicleInput!): Vehicle!
+  updateVehicleById(updateVehicleInput: UpdateVehicleInput!): Vehicle!
+  deleteVehicleById(id: Int!): Vehicle!
+}
+
+input CreateVehicleInput {
+  id: Int!
+  firstName: String
+  lastName: String
+  email: String
+  carMake: String
+  carModel: String
+  vinNumber: String
+  manufacturedDate: String
+}
+
+input UpdateVehicleInput {
+  firstName: String
+  lastName: String
+  email: String
+  carMake: String
+  carModel: String
+  vinNumber: String
+  manufacturedDate: String
+  id: Int!
+}
+
+type Node{
+  nodes: [Vehicle]
+  pageInfo: PageInfo
+}
+
+type PageInfo{
+  startCursor:String
+  endCursor:String
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+}
+
+enum VehicleOrderBy {
+    MANUFACTURED_DATE_ASC
+}
+
+input VehicleFilter{
+  carMake: StringFilter
+}
+
+input StringFilter{
+  includesInsensitive: String
+}
